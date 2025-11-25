@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Responsável - Sistema Escolar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Menu de Acessibilidade -->
+    <div class="accessibility-menu">
+        <button class="accessibility-toggle">
+            ♿ Acessibilidade
+        </button>
+        <div class="accessibility-options" id="accessibilityOptions">
+            <a href="#" onclick="toggleAccessibility('daltonismo')">Modo Daltônico</a>
+            <a href="#" onclick="toggleAccessibility('preto-e-branco')">Preto e Branco</a>
+            <a href="#" onclick="toggleAccessibility('nenhum')">Restaurar Padrão</a>
+        </div>
+    </div>
+
+    <!-- Legendas de Acessibilidade -->
+    <button class="legend-toggle" onclick="toggleLegend()">Ver Legenda (Daltonismo)</button>
+    <div class="daltonismo-legend" id="daltonismoLegend">
+        <button class="legend-close-btn" onclick="toggleLegend()" aria-label="Fechar legenda">×</button>
+        <div class="legend-item">
+            <div class="legend-symbol" style="background: #0066cc;">★</div>
+            <span class="legend-text">Excelente</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-symbol" style="background: #666666;">●</div>
+            <span class="legend-text">Bom</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-symbol" style="background: #cc6600;">▲</div>
+            <span class="legend-text">Regular / Atenção</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-symbol" style="background: #000000;">✖</div>
+            <span class="legend-text">Insatisfatório</span>
+        </div>
+    </div>
+
+    <button class="pb-legend-toggle" onclick="togglePbLegend()">Ver Legenda (P&B)</button>
+    <div class="pb-legend" id="pbLegend">
+        <button class="legend-close-btn" onclick="togglePbLegend()" aria-label="Fechar legenda">×</button>
+        <div class="legend-item">
+            <div class="legend-symbol" style="background: #666;">■</div>
+            <span class="legend-text">Excelente</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-symbol" style="background: #666;">●</div>
+            <span class="legend-text">Bom</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-symbol" style="background: #666;">▲</div>
+            <span class="legend-text">Regular / Atenção</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-symbol" style="background: #666;">✖</div>
+            <span class="legend-text">Insatisfatório</span>
+        </div>
+    </div>
+
+    <!-- Elementos Decorativos removidos -->
+
+    <div class="app-container">
+        <!-- DASHBOARD RESPONSÁVEL -->
+        <div class="page active" id="dashboardResponsavelPage">
+            <div class="main-layout">
+                <nav class="sidebar">
+                    <!-- Logo ProJK -->
+                    <div class="projk-logo-container" style="padding: 20px 15px; border-bottom: 2px solid rgba(52, 152, 219, 0.2); margin-bottom: 20px;">
+                        <div class="projk-logo" style="font-size: 36px;">
+                            <span class="logo-pro">Pro</span>
+                            <span class="logo-j">J</span>
+                            <span class="logo-k">K</span>
+                            <span class="logo-dot">●</span>
+                        </div>
+                        <p class="logo-subtitle" style="font-size: 12px; margin-top: 5px;">Sistema Escolar</p>
+                    </div>
+                    <div class="menu-item active" onclick="showResponsavelSection('boletim')">
+                        <div class="menu-icon"><i class="fas fa-clipboard-list"></i></div>
+                        <span>Boletim</span>
+                    </div>
+
+                    <div class="menu-item" onclick="showResponsavelSection('frequencia')">
+                        <div class="menu-icon"><i class="fas fa-calendar-check"></i></div>
+                        <span>Frequência</span>
+                    </div>
+
+                    <div class="menu-item" onclick="showResponsavelSection('perfil')">
+                        <div class="menu-icon"><i class="fas fa-user"></i></div>
+                        <span>Perfil</span>
+                    </div>
+
+                    <div class="menu-item" onclick="logout()">
+                        <div class="menu-icon"><i class="fas fa-sign-out-alt"></i></div>
+                        <span>Sair</span>
+                    </div>
+                </nav>
+
+                <main class="main-content">
+                    <!-- SEÇÃO BOLETIM DO FILHO -->
+                    <div id="responsavelBoletimSection">
+                        <div class="professor-dashboard-container">
+                            <div class="professor-header">
+                                <h1 class="professor-title">Boletim do Filho</h1>
+                                <div class="header-badges" style="display: flex; gap: 10px; align-items: center;">
+                                    <div class="bd-projk" style="background: var(--primary-yellow); color: #000; padding: 8px 16px; border-radius: 20px; font-weight: 800; font-size: 18px; letter-spacing: 1px;">
+                                        <span class="logo-j" style="color: #000;">J</span><span class="logo-k" style="color: var(--primary-blue);">K</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Informações do Aluno -->
+                            <div style="background: #ffffff; padding: 25px; border-radius: var(--border-radius-lg); margin-bottom: 25px; border: 2px solid rgba(241, 196, 15, 0.3); box-shadow: var(--shadow-sm);">
+                                <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+                                    <div class="avatar-container" style="position: relative;">
+                                        <div style="width: 100px; height: 100px; border-radius: 50%; background: var(--primary-blue); display: flex; align-items: center; justify-content: center; font-size: 42px; font-weight: 800; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: 4px solid white;" id="filhoInitial">
+                                            MS
+                                        </div>
+                                        <div class="avatar-badge" style="position: absolute; bottom: 0; right: 0; background: var(--primary-yellow); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
+                                            <i class="fas fa-graduation-cap" style="color: #000; font-size: 14px;"></i>
+                                        </div>
+                                    </div>
+                                    <div style="flex: 1; min-width: 200px;">
+                                        <h2 style="color: var(--text-dark); font-size: 24px; font-weight: 700; margin-bottom: 8px;" id="responsavelFilhoNome">Maria Silva</h2>
+                                        <div style="color: var(--text-medium); font-size: 15px; margin-bottom: 8px;" id="responsavelFilhoInfo">Matrícula: 2309567 • Turma: 2ºA</div>
+                                    </div>
+                                    <!-- Opções de Acessibilidade -->
+                                    <div class="bd-toolbar" role="region" aria-label="Opções de acessibilidade" style="display: flex; gap: 8px; flex-wrap: wrap; margin-left: auto;">
+                                        <button type="button" class="bd-btn" data-action="font-dec" aria-label="Diminuir texto" style="background: rgba(52, 152, 219, 0.1); color: var(--primary-blue); border: 1px solid rgba(52, 152, 219, 0.3); padding: 8px 12px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;">A−</button>
+                                        <button type="button" class="bd-btn" data-action="font-inc" aria-label="Aumentar texto" style="background: rgba(52, 152, 219, 0.1); color: var(--primary-blue); border: 1px solid rgba(52, 152, 219, 0.3); padding: 8px 12px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;">A+</button>
+                                        <button type="button" class="bd-btn" data-action="contrast" aria-label="Alto contraste" style="background: rgba(52, 152, 219, 0.1); color: var(--primary-blue); border: 1px solid rgba(52, 152, 219, 0.3); padding: 8px 12px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;">◐</button>
+                                        <button type="button" class="bd-btn" data-action="dyslexia" aria-label="Fonte para dislexia" style="background: rgba(52, 152, 219, 0.1); color: var(--primary-blue); border: 1px solid rgba(52, 152, 219, 0.3); padding: 8px 12px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;">𝑓</button>
+                                        <button type="button" class="bd-btn" data-action="reduce-motion" aria-label="Reduzir animações" style="background: rgba(52, 152, 219, 0.1); color: var(--primary-blue); border: 1px solid rgba(52, 152, 219, 0.3); padding: 8px 12px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;">◎</button>
+                                        <button type="button" class="bd-btn" data-action="print" aria-label="Exportar PDF" style="background: var(--primary-blue); color: white; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;"><i class="fas fa-print"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <h3 class="boletim-title" style="text-align: center; color: var(--primary-blue); font-size: 24px; margin-bottom: 25px; font-weight: 700;"><i class="fas fa-clipboard-list"></i> Boletim Escolar</h3>
+                        
+                        <!-- Indicador de Bimestre Atual -->
+                        <div style="background: var(--primary-yellow); color: #000; padding: 15px 25px; border-radius: var(--border-radius-md); margin-bottom: 25px; text-align: center; font-weight: 700; font-size: 18px; box-shadow: var(--shadow-sm);">
+                            <i class="fas fa-calendar-alt"></i> Bimestre Atual: <span id="bimestreAtualResponsavel">1º Bimestre</span>
+                        </div>
+                        
+                        <div class="tab-headers" style="pointer-events: none; opacity: 0.7;">
+                            <div class="tab-header"><strong><i class="fas fa-book"></i> Disciplina</strong></div>
+                            <div class="tab-header active"><i class="fas fa-edit"></i> Simulado 1</div>
+                            <div class="tab-header"><i class="fas fa-edit"></i> Simulado 2</div>
+                            <div class="tab-header"><i class="fas fa-edit"></i> Simulado 3</div>
+                            <div class="tab-header"><i class="fas fa-edit"></i> Simulado 4</div>
+                        </div>
+
+                            <table class="grades-table">
+                                <tr>
+                                    <td class="subject-cell">Português</td>
+                                    <td class="grade-cell grade-bom">Bom</td>
+                                    <td class="grade-cell grade-excelente">Excelente</td>
+                                    <td class="grade-cell grade-bom">Bom</td>
+                                    <td class="grade-cell grade-excelente">Excelente</td>
+                                </tr>
+                                <tr>
+                                    <td class="subject-cell">Matemática</td>
+                                    <td class="grade-cell grade-excelente">Excelente</td>
+                                    <td class="grade-cell grade-excelente">Excelente</td>
+                                    <td class="grade-cell grade-bom">Bom</td>
+                                    <td class="grade-cell grade-excelente">Excelente</td>
+                                </tr>
+                                <tr>
+                                    <td class="subject-cell">Ciências</td>
+                                    <td class="grade-cell grade-bom">Bom</td>
+                                    <td class="grade-cell grade-bom">Bom</td>
+                                    <td class="grade-cell grade-excelente">Excelente</td>
+                                    <td class="grade-cell grade-bom">Bom</td>
+                                </tr>
+                            </table>
+
+                            <!-- Índice de Média -->
+                            <div class="media-index-container media-index-small" id="mediaIndexResponsavel">
+                                <div class="media-index-header">
+                                    <h3 class="media-index-title"><i class="fas fa-chart-pie"></i> Índice de Média</h3>
+                                </div>
+                                <div class="media-index-grid">
+                                    <div class="media-index-item media-excelente">
+                                        <div class="media-icon">
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="media-content">
+                                            <div class="media-label">Excelente</div>
+                                            <div class="media-value" id="mediaExcelenteResponsavel">0</div>
+                                            <div class="media-percentage" id="mediaExcelentePctResponsavel">0%</div>
+                                        </div>
+                                    </div>
+                                    <div class="media-index-item media-bom">
+                                        <div class="media-icon">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                        <div class="media-content">
+                                            <div class="media-label">Bom</div>
+                                            <div class="media-value" id="mediaBomResponsavel">0</div>
+                                            <div class="media-percentage" id="mediaBomPctResponsavel">0%</div>
+                                        </div>
+                                    </div>
+                                    <div class="media-index-item media-atencao">
+                                        <div class="media-icon">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                        </div>
+                                        <div class="media-content">
+                                            <div class="media-label">Atenção</div>
+                                            <div class="media-value" id="mediaAtencaoResponsavel">0</div>
+                                            <div class="media-percentage" id="mediaAtencaoPctResponsavel">0%</div>
+                                        </div>
+                                    </div>
+                                    <div class="media-index-item media-ruim">
+                                        <div class="media-icon">
+                                            <i class="fas fa-times-circle"></i>
+                                        </div>
+                                        <div class="media-content">
+                                            <div class="media-label">Ruim</div>
+                                            <div class="media-value" id="mediaRuimResponsavel">0</div>
+                                            <div class="media-percentage" id="mediaRuimPctResponsavel">0%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="media-index-summary">
+                                    <div class="media-total">
+                                        <span class="media-total-label">Total de Notas:</span>
+                                        <span class="media-total-value" id="mediaTotalResponsavel">0</span>
+                                    </div>
+                                    <div class="media-average">
+                                        <span class="media-average-label">Média Geral:</span>
+                                        <span class="media-average-value" id="mediaGeralResponsavel">-</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Seção de Observações do Professor -->
+                            <div class="observacoes-section">
+                                <h3 class="observacoes-title"><i class="fas fa-edit"></i> Observações dos Professores</h3>
+                                
+                                <div class="observacao-card">
+                                    <div class="observacao-header">
+                                        <span class="observacao-disciplina"><i class="fas fa-calculator"></i> Matemática</span>
+                                        <span class="observacao-data">15/10/2024</span>
+                                    </div>
+                                    <div class="observacao-professor">Prof. Carlos Silva</div>
+                                    <div class="observacao-texto">
+                                        Aluna demonstra excelente desempenho em todas as atividades. Participa ativamente das aulas e auxilia os colegas. Recomendo continuar incentivando a prática diária de exercícios.
+                                    </div>
+                            </div>
+
+                                <div class="observacao-card">
+                                    <div class="observacao-header">
+                                        <span class="observacao-disciplina"><i class="fas fa-book-open"></i> Português</span>
+                                        <span class="observacao-data">12/10/2024</span>
+                                    </div>
+                                    <div class="observacao-professor">Profa. Ana Costa</div>
+                                    <div class="observacao-texto">
+                                        Ótimo progresso na leitura e interpretação de textos. Sugiro aumentar o hábito de leitura em casa para continuar desenvolvendo as habilidades linguísticas.
+                                    </div>
+                            </div>
+
+                                <div class="observacao-card">
+                                    <div class="observacao-header">
+                                        <span class="observacao-disciplina"><i class="fas fa-flask"></i> Ciências</span>
+                                        <span class="observacao-data">10/10/2024</span>
+                                    </div>
+                                    <div class="observacao-professor">Prof. Roberto Mendes</div>
+                                    <div class="observacao-texto">
+                                        Demonstra curiosidade e interesse pelos temas científicos. Participação ativa nos experimentos em laboratório. Continuar estimulando a curiosidade científica.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="status-section">
+                                <h2 class="status-title"><i class="fas fa-chart-bar"></i> Status</h2>
+                                <div class="status-indicators">
+                                    <div class="status-indicator status-muito-bem"><i class="fas fa-star"></i> Está muito bem</div>
+                                    <div class="status-indicator status-bem"><i class="fas fa-check-circle"></i> Está bem</div>
+                                    <div class="status-indicator status-atencao"><i class="fas fa-exclamation-triangle"></i> Requer atenção</div>
+                                    <div class="status-indicator status-mal"><i class="fas fa-times-circle"></i> Está mal</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SEÇÃO FREQUÊNCIA -->
+                    <div id="responsavelFrequenciaSection" style="display: none;">
+                        <h1 style="font-size: 24px; color: #333; margin-bottom: 30px;">Frequência Escolar</h1>
+
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 15px; margin-bottom: 20px;">
+                            <h3 style="color: #333; margin-bottom: 15px;">Resumo do Mês</h3>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                                <div style="text-align: center;">
+                                    <div style="font-size: 32px; font-weight: bold; color: #4CAF50;">22</div>
+                                    <div style="color: #666;">Dias Presentes</div>
+                                </div>
+                                <div style="text-align: center;">
+                                    <div style="font-size: 32px; font-weight: bold; color: #FF9800;">2</div>
+                                    <div style="color: #666;">Faltas</div>
+                                </div>
+                                <div style="text-align: center;">
+                                    <div style="font-size: 32px; font-weight: bold; color: #2196F3;">88%</div>
+                                    <div style="color: #666;">Frequência</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="background: white; border: 1px solid #eee; border-radius: 15px; padding: 20px;">
+                            <h4 style="margin-bottom: 15px;">Últimas Ausências</h4>
+                            <div style="color: #666;">
+                                <p>• 15/08/2024 - Falta justificada (atestado médico)</p>
+                                <p>• 12/08/2024 - Falta não justificada</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SEÇÃO PERFIL RESPONSÁVEL -->
+                    <div id="responsavelPerfilSection" style="display: none;">
+                        <div class="professor-dashboard-container">
+                            <div class="professor-header">
+                                <h1 class="professor-title">Meu Perfil</h1>
+                            </div>
+                            
+                            <div style="text-align: center; padding: 40px 20px;">
+                                <div style="position: relative; display: inline-block; margin-bottom: 25px;">
+                                    <div style="width: 150px; height: 150px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-blue), var(--primary-yellow)); display: flex; align-items: center; justify-content: center; font-size: 64px; font-weight: 800; color: white; box-shadow: 0 8px 25px rgba(0,0,0,0.2); border: 6px solid white; cursor: pointer; transition: all 0.3s ease;" onclick="changePhoto()" id="responsavelPerfilAvatar">
+                                        <span id="responsavelPerfilInitial">JS</span>
+                                    </div>
+                                    <div style="position: absolute; bottom: 10px; right: 10px; background: var(--primary-yellow); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 4px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.2); cursor: pointer;" onclick="changePhoto()">
+                                        <i class="fas fa-camera" style="color: #000; font-size: 16px;"></i>
+                                    </div>
+                                </div>
+                                <h2 style="color: var(--text-dark); font-size: 28px; font-weight: 700; margin-bottom: 10px;" id="responsavelPerfilNome">José Silva</h2>
+                                <div style="display: inline-block; background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue)); color: white; padding: 8px 20px; border-radius: 20px; font-size: 15px; font-weight: 600; margin-bottom: 30px;" id="responsavelPerfilCpf">
+                                    CPF: ***.***.*89-00
+                                </div>
+                            </div>
+
+                        <!-- Informações do Aluno Vinculado -->
+                        <div style="background: linear-gradient(135deg, #e3f2fd, #f5f5f5); padding: 25px; border-radius: 15px; margin: 30px 0; border-left: 5px solid #2196F3;">
+                            <h3 style="color: #2196F3; font-size: 18px; margin-bottom: 15px; text-align: center;"><i class="fas fa-users"></i> Aluno Vinculado</h3>
+                            <div style="background: #fff3cd; padding: 10px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; color: #856404; text-align: center;">
+                                <i class="fas fa-lock"></i> <strong>Segurança:</strong> CPFs são exibidos parcialmente protegidos
+                            </div>
+                            <div style="display: grid; gap: 15px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: white; border-radius: var(--border-radius-md); border: 1px solid rgba(52, 152, 219, 0.1);">
+                                    <strong style="color: var(--primary-blue);"><i class="fas fa-user"></i> Nome:</strong>
+                                    <span id="alunoVinculadoNome" style="color: var(--text-dark);">João Silva</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: white; border-radius: var(--border-radius-md); border: 1px solid rgba(52, 152, 219, 0.1);">
+                                    <strong style="color: var(--primary-blue);"><i class="fas fa-id-card"></i> Matrícula:</strong>
+                                    <span id="alunoVinculadoMatricula" style="color: var(--text-dark);">2024001</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: white; border-radius: var(--border-radius-md); border: 1px solid rgba(52, 152, 219, 0.1);">
+                                    <strong style="color: var(--primary-blue);"><i class="fas fa-lock"></i> CPF:</strong>
+                                    <span id="alunoVinculadoCpf" style="font-family: monospace; letter-spacing: 1px; color: var(--text-dark);">***.***.*33-44</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: white; border-radius: var(--border-radius-md); border: 1px solid rgba(52, 152, 219, 0.1);">
+                                    <strong style="color: var(--primary-blue);"><i class="fas fa-birthday-cake"></i> Data de Nascimento:</strong>
+                                    <span id="alunoVinculadoNascimento" style="color: var(--text-dark);">15/03/2010</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: white; border-radius: var(--border-radius-md); border: 1px solid rgba(52, 152, 219, 0.1);">
+                                    <strong style="color: var(--primary-blue);"><i class="fas fa-school"></i> Turma:</strong>
+                                    <span id="alunoVinculadoTurma" style="color: var(--text-dark);">2ª Série A</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="text-align: center; display: flex; gap: 15px; justify-content: center;">
+                            <button class="btn btn-edit" onclick="editResponsavelProfile()">
+                                <i class="fas fa-edit" style="margin-right: 8px;"></i>
+                                Editar Perfil
+                            </button>
+                            <button class="btn btn-save" onclick="saveResponsavelProfile()">
+                                <i class="fas fa-save" style="margin-right: 8px;"></i>
+                                Salvar
+                            </button>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <div class="corner-decoration bottom-left"></div>
+        <div class="corner-decoration bottom-right"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Função de navegação para páginas separadas
+        function navigateToPage(page) {
+            window.location.href = page;
+        }
+
+        // Função para calcular índice de média
+        function calcularMediaIndice() {
+            const table = document.querySelector('#responsavelBoletimSection .grades-table');
+            if (!table) return;
+
+            let excelente = 0, bom = 0, atencao = 0, ruim = 0;
+            const rows = table.querySelectorAll('tr');
+
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('.grade-cell');
+                cells.forEach(cell => {
+                    const text = cell.textContent.trim();
+                    if (text === 'Excelente') excelente++;
+                    else if (text === 'Bom') bom++;
+                    else if (text === 'Regular') atencao++;
+                    else if (text === 'Insatisfatório') ruim++;
+                });
+            });
+
+            const total = excelente + bom + atencao + ruim;
+            
+            // Atualizar valores
+            document.getElementById('mediaExcelenteResponsavel').textContent = excelente;
+            document.getElementById('mediaBomResponsavel').textContent = bom;
+            document.getElementById('mediaAtencaoResponsavel').textContent = atencao;
+            document.getElementById('mediaRuimResponsavel').textContent = ruim;
+            document.getElementById('mediaTotalResponsavel').textContent = total;
+
+            // Calcular percentuais
+            if (total > 0) {
+                document.getElementById('mediaExcelentePctResponsavel').textContent = 
+                    Math.round((excelente / total) * 100) + '%';
+                document.getElementById('mediaBomPctResponsavel').textContent = 
+                    Math.round((bom / total) * 100) + '%';
+                document.getElementById('mediaAtencaoPctResponsavel').textContent = 
+                    Math.round((atencao / total) * 100) + '%';
+                document.getElementById('mediaRuimPctResponsavel').textContent = 
+                    Math.round((ruim / total) * 100) + '%';
+
+                // Calcular média geral com pesos: Excelente=3, Bom=2, Atenção=1, Ruim=0
+                const somaPonderada = (excelente * 3) + (bom * 2) + (atencao * 1) + (ruim * 0);
+                const mediaGeral = total > 0 ? somaPonderada / total : 0;
+                
+                // Formatar média com 2 casas decimais
+                const mediaFormatada = mediaGeral.toFixed(2);
+                
+                // Determinar classificação baseada na média (escala 0-3)
+                // 0,0 a 0,4 → Muito mal
+                // 0,5 a 1,4 → Atenção
+                // 1,5 a 2,4 → Bom
+                // 2,5 a 3,0 → Excelente
+                let mediaTexto = '';
+                if (mediaGeral >= 2.5) mediaTexto = 'Excelente';
+                else if (mediaGeral >= 1.5) mediaTexto = 'Bom';
+                else if (mediaGeral >= 0.5) mediaTexto = 'Atenção';
+                else mediaTexto = 'Muito mal';
+
+                document.getElementById('mediaGeralResponsavel').textContent = `${mediaFormatada} (${mediaTexto})`;
+            } else {
+                document.getElementById('mediaExcelentePctResponsavel').textContent = '0%';
+                document.getElementById('mediaBomPctResponsavel').textContent = '0%';
+                document.getElementById('mediaAtencaoPctResponsavel').textContent = '0%';
+                document.getElementById('mediaRuimPctResponsavel').textContent = '0%';
+                document.getElementById('mediaGeralResponsavel').textContent = '-';
+            }
+        }
+
+        // Função para determinar classe de nota baseada no valor
+        function getGradeClassFromValue(valor) {
+            if (!valor) return 'regular';
+            
+            // Se for texto (Excelente, Bom, etc)
+            const valorLower = valor.toString().toLowerCase();
+            if (valorLower.includes('excelente')) return 'excelente';
+            if (valorLower.includes('bom')) return 'bom';
+            if (valorLower.includes('regular')) return 'regular';
+            if (valorLower.includes('insatisfatório') || valorLower.includes('ruim')) return 'insatisfatorio';
+            
+            // Se for número ou porcentagem
+            const numValor = parseFloat(valor.toString().replace('%', '').replace(',', '.'));
+            if (isNaN(numValor)) return 'regular';
+            
+            // Classificar por valor numérico (0-10)
+            if (numValor >= 8.5) return 'excelente';
+            if (numValor >= 7.0) return 'bom';
+            if (numValor >= 5.0) return 'regular';
+            return 'insatisfatorio';
+        }
+
+        // Calcular média quando a página carregar
+        document.addEventListener('DOMContentLoaded', function() {
+            calcularMediaIndice();
+            
+            // Determinar bimestre atual baseado na data
+            const hoje = new Date();
+            const mes = hoje.getMonth() + 1; // 1-12
+            let bimestre = 1;
+            if (mes >= 3 && mes <= 4) bimestre = 1;
+            else if (mes >= 5 && mes <= 6) bimestre = 2;
+            else if (mes >= 7 && mes <= 9) bimestre = 3;
+            else if (mes >= 10 && mes <= 12) bimestre = 4;
+            
+            const bimestreElement = document.getElementById('bimestreAtualResponsavel');
+            if (bimestreElement) {
+                bimestreElement.textContent = `${bimestre}º Bimestre`;
+            }
+        });
+
+        // Modificar função logout para redirecionar
+        function logout() {
+            localStorage.removeItem('currentUser');
+            showAlert('Logout realizado com sucesso!', 'success');
+            setTimeout(() => navigateToPage('login.html'), 1500);
+        }
+
+        // Variáveis globais
+        let currentAccessibilityMode = 'nenhum';
+        let fontSize = 100;
+
+        // Função para alternar acessibilidade
+        function toggleAccessibility(mode) {
+            const body = document.body;
+            const daltonismoLegend = document.getElementById('daltonismoLegend');
+            const pbLegend = document.getElementById('pbLegend');
+            
+            // Remover modos anteriores
+            body.classList.remove('daltonismo-mode', 'preto-e-branco-mode');
+            daltonismoLegend.classList.remove('show');
+            pbLegend.classList.remove('show');
+            
+            currentAccessibilityMode = mode;
+            
+            if (mode === 'daltonismo') {
+                body.classList.add('daltonismo-mode');
+                daltonismoLegend.classList.add('show');
+                showAlert('Modo Daltônico ativado! Legenda exibida.', 'success');
+            } else if (mode === 'preto-e-branco') {
+                body.classList.add('preto-e-branco-mode');
+                pbLegend.classList.add('show');
+                showAlert('Modo Preto e Branco ativado! Legenda exibida.', 'success');
+            } else {
+                showAlert('Modo de visualização padrão restaurado.', 'success');
+            }
+            
+            // Fechar menu de acessibilidade após seleção
+            document.getElementById('accessibilityOptions').classList.remove('show');
+        }
+        
+        // Função para alternar legenda de daltonismo
+        function toggleLegend() {
+            const legend = document.getElementById('daltonismoLegend');
+            legend.classList.toggle('show');
+        }
+        
+        // Função para alternar legenda P&B
+        function togglePbLegend() {
+            const legend = document.getElementById('pbLegend');
+            legend.classList.toggle('show');
+        }
+        
+        // Fechar legendas ao clicar fora
+        document.addEventListener('click', function(e) {
+            const daltonismoLegend = document.getElementById('daltonismoLegend');
+            const pbLegend = document.getElementById('pbLegend');
+            const legendToggle = document.querySelector('.legend-toggle');
+            const pbLegendToggle = document.querySelector('.pb-legend-toggle');
+            
+            if (daltonismoLegend && daltonismoLegend.classList.contains('show')) {
+                if (!daltonismoLegend.contains(e.target) && e.target !== legendToggle && !legendToggle.contains(e.target)) {
+                    daltonismoLegend.classList.remove('show');
+                }
+            }
+            
+            if (pbLegend && pbLegend.classList.contains('show')) {
+                if (!pbLegend.contains(e.target) && e.target !== pbLegendToggle && !pbLegendToggle.contains(e.target)) {
+                    pbLegend.classList.remove('show');
+                }
+            }
+        });
+        
+        // Fechar legendas com ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const daltonismoLegend = document.getElementById('daltonismoLegend');
+                const pbLegend = document.getElementById('pbLegend');
+                if (daltonismoLegend) daltonismoLegend.classList.remove('show');
+                if (pbLegend) pbLegend.classList.remove('show');
+            }
+        });
+
+        // Verificar se o usuário está logado
+        document.addEventListener('DOMContentLoaded', function() {
+            const accessibilityToggle = document.querySelector('.accessibility-toggle');
+            const accessibilityOptions = document.getElementById('accessibilityOptions');
+            
+            if (accessibilityToggle) {
+                accessibilityToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    accessibilityOptions.classList.toggle('show');
+                });
+            }
+            
+            // Fechar menu ao clicar fora
+            document.addEventListener('click', function(event) {
+                if (!event.target.closest('.accessibility-menu')) {
+                    accessibilityOptions.classList.remove('show');
+                }
+            });
+            
+            // Carregar dados do usuário do localStorage
+            const userData = localStorage.getItem('currentUser');
+            if (!userData) {
+                navigateToPage('login.html');
+                return;
+            }
+
+            const currentUser = JSON.parse(userData);
+            if (currentUser.type !== 'responsavel') {
+                navigateToPage('login.html');
+                return;
+            }
+
+            // Atualizar informações do perfil do responsável
+            const nomeElement = document.getElementById('responsavelPerfilNome');
+            const cpfElement = document.getElementById('responsavelPerfilCpf');
+            const responsavelInitialEl = document.getElementById('responsavelPerfilInitial');
+            
+            if (nomeElement) nomeElement.textContent = currentUser.name;
+            if (cpfElement) {
+                const cpfMascarado = mascararCPF(currentUser.cpfResponsavel || currentUser.cpf);
+                cpfElement.textContent = `CPF: ${cpfMascarado}`;
+            }
+            
+            // Gerar iniciais do responsável para o avatar
+            if (responsavelInitialEl && currentUser.name) {
+                const names = currentUser.name.trim().split(' ');
+                let initials = '';
+                if (names.length >= 2) {
+                    initials = names[0].charAt(0).toUpperCase() + names[names.length - 1].charAt(0).toUpperCase();
+                } else if (names.length === 1 && names[0].length >= 2) {
+                    initials = names[0].charAt(0).toUpperCase() + names[0].charAt(1).toUpperCase();
+                } else {
+                    initials = names[0].charAt(0).toUpperCase() + 'R';
+                }
+                responsavelInitialEl.textContent = initials || 'RS';
+            }
+            
+            // Buscar aluno vinculado
+            let alunoVinculado = null;
+            if (currentUser.cpfAlunoVinculado) {
+                // Buscar nos usuários cadastrados
+                const todosUsuarios = Object.values(users);
+                alunoVinculado = todosUsuarios.find(u => u.type === 'aluno' && u.cpfAluno === currentUser.cpfAlunoVinculado);
+            }
+            
+            // Se tiver dados salvos do aluno vinculado, usar
+            if (currentUser.alunoVinculado) {
+                alunoVinculado = currentUser.alunoVinculado;
+            }
+            
+            // Atualizar informações do aluno vinculado na tela
+            if (alunoVinculado) {
+                // Header do boletim
+                const filhoNomeEl = document.getElementById('responsavelFilhoNome');
+                const filhoInfoEl = document.getElementById('responsavelFilhoInfo');
+                if (filhoNomeEl) filhoNomeEl.textContent = alunoVinculado.nome || alunoVinculado.name;
+                if (filhoInfoEl) filhoInfoEl.textContent = `Matrícula: ${alunoVinculado.matricula} • Turma: ${alunoVinculado.serie}ª${alunoVinculado.turma}`;
+                
+                // Gerar iniciais do filho para o avatar
+                const filhoInitialEl = document.getElementById('filhoInitial');
+                if (filhoInitialEl) {
+                    const filhoNome = alunoVinculado.nome || alunoVinculado.name;
+                    if (filhoNome) {
+                        const names = filhoNome.trim().split(' ');
+                        let initials = '';
+                        if (names.length >= 2) {
+                            initials = names[0].charAt(0).toUpperCase() + names[names.length - 1].charAt(0).toUpperCase();
+                        } else if (names.length === 1 && names[0].length >= 2) {
+                            initials = names[0].charAt(0).toUpperCase() + names[0].charAt(1).toUpperCase();
+                        } else {
+                            initials = names[0].charAt(0).toUpperCase() + 'A';
+                        }
+                        filhoInitialEl.textContent = initials || 'AL';
+                    }
+                }
+                
+                // Seção de perfil - dados do aluno
+                const alunoNomeEl = document.getElementById('alunoVinculadoNome');
+                const alunoMatriculaEl = document.getElementById('alunoVinculadoMatricula');
+                const alunoCpfEl = document.getElementById('alunoVinculadoCpf');
+                const alunoNascimentoEl = document.getElementById('alunoVinculadoNascimento');
+                const alunoTurmaEl = document.getElementById('alunoVinculadoTurma');
+                
+                if (alunoNomeEl) alunoNomeEl.textContent = alunoVinculado.nome || alunoVinculado.name;
+                if (alunoMatriculaEl) alunoMatriculaEl.textContent = alunoVinculado.matricula;
+                if (alunoCpfEl) {
+                    const cpfAlunoMascarado = mascararCPF(alunoVinculado.cpf || alunoVinculado.cpfAluno);
+                    alunoCpfEl.textContent = cpfAlunoMascarado;
+                }
+                if (alunoNascimentoEl) {
+                    const dataNasc = alunoVinculado.dataNascimento;
+                    if (dataNasc) {
+                        const dataFormatada = new Date(dataNasc + 'T00:00:00').toLocaleDateString('pt-BR');
+                        alunoNascimentoEl.textContent = dataFormatada;
+                    }
+                }
+                if (alunoTurmaEl) alunoTurmaEl.textContent = `${alunoVinculado.serie}ª Série ${alunoVinculado.turma}`;
+            } else {
+                showAlert('Atenção: Nenhum aluno vinculado encontrado!', 'error');
+            }
+            
+            // Funcionalidade dos botões da toolbar
+            const toolbar = document.querySelector('.bd-toolbar');
+            if (toolbar) {
+                toolbar.addEventListener('click', function(e) {
+                    const btn = e.target.closest('.bd-btn');
+                    if (!btn) return;
+                    
+                    const action = btn.dataset.action;
+                    
+                    switch(action) {
+                        case 'font-dec':
+                            adjustFontSize(-1);
+                            break;
+                        case 'font-inc':
+                            adjustFontSize(1);
+                            break;
+                        case 'contrast':
+                            toggleHighContrast();
+                            break;
+                        case 'dyslexia':
+                            toggleDyslexiaFont();
+                            break;
+                        case 'reduce-motion':
+                            toggleReducedMotion();
+                            break;
+                        case 'print':
+                            exportBoletimFilhoPDF();
+                            break;
+                    }
+                });
+            }
+        });
+        
+        // Funções auxiliares da toolbar (sem redeclaração)
+        function adjustFontSize(delta) {
+            if (typeof fontSize === 'undefined') {
+                window.fontSize = 100;
+            }
+            fontSize = Math.max(80, Math.min(120, fontSize + delta * 10));
+            document.documentElement.style.fontSize = fontSize + '%';
+            showAlert(`Tamanho da fonte: ${fontSize}%`, 'success');
+        }
+        
+        function toggleHighContrast() {
+            document.body.classList.toggle('high-contrast');
+            const isActive = document.body.classList.contains('high-contrast');
+            showAlert(isActive ? 'Alto contraste ativado' : 'Alto contraste desativado', 'success');
+        }
+        
+        function toggleDyslexiaFont() {
+            document.body.classList.toggle('dyslexia-font');
+            const isActive = document.body.classList.contains('dyslexia-font');
+            showAlert(isActive ? 'Fonte para dislexia ativada' : 'Fonte padrão restaurada', 'success');
+        }
+        
+        function toggleReducedMotion() {
+            document.body.classList.toggle('reduced-motion');
+            const isActive = document.body.classList.contains('reduced-motion');
+            showAlert(isActive ? 'Animações reduzidas' : 'Animações restauradas', 'success');
+        }
+        
+        function exportBoletimFilhoPDF() {
+            const userData = localStorage.getItem('currentUser');
+            if (!userData) {
+                showAlert('Erro: Usuário não encontrado!', 'error');
+                return;
+            }
+
+            const currentUser = JSON.parse(userData);
+            showAlert('Gerando PDF do boletim...', 'success');
+            
+            // Dados do boletim do filho
+            const disciplinas = [
+                { nome: 'Frequência', bim1: '88%', bim2: '95%', bim3: '90%', bim4: '92%' },
+                { nome: 'Português', bim1: '8.2', bim2: '9.0', bim3: '8.5', bim4: '9.2' },
+                { nome: 'Matemática', bim1: '9.1', bim2: '9.5', bim3: '8.8', bim4: '9.3' },
+                { nome: 'Ciências', bim1: '8.0', bim2: '8.5', bim3: '9.0', bim4: '8.7' },
+                { nome: 'História', bim1: '7.8', bim2: '8.2', bim3: '8.0', bim4: '8.3' },
+                { nome: 'Comportamento', bim1: 'Excelente', bim2: 'Excelente', bim3: 'Bom', bim4: 'Excelente' }
+            ];
+            
+            const observacoes = [
+                {
+                    disciplina: 'Matemática',
+                    professor: 'Prof. Carlos Silva',
+                    data: '15/10/2024',
+                    texto: 'Aluna demonstra excelente desempenho em todas as atividades. Participa ativamente das aulas e auxilia os colegas. Recomendo continuar incentivando a prática diária de exercícios.'
+                },
+                {
+                    disciplina: 'Português',
+                    professor: 'Profa. Ana Costa',
+                    data: '12/10/2024',
+                    texto: 'Ótimo progresso na leitura e interpretação de textos. Sugiro aumentar o hábito de leitura em casa para continuar desenvolvendo as habilidades linguísticas.'
+                },
+                {
+                    disciplina: '🔬 Ciências',
+                    professor: 'Prof. Roberto Mendes',
+                    data: '10/10/2024',
+                    texto: 'Demonstra curiosidade e interesse pelos temas científicos. Participação ativa nos experimentos em laboratório. Continuar estimulando a curiosidade científica.'
+                }
+            ];
+            
+            // Criar conteúdo HTML para o PDF
+            let htmlContent = `
+                <html>
+                <head>
+                    <style>
+                        body { 
+                            font-family: 'Segoe UI', Arial, sans-serif; 
+                            padding: 40px; 
+                            background: #f8f9fa; 
+                        }
+                        .container { 
+                            background: white; 
+                            padding: 40px; 
+                            border-radius: 15px; 
+                            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); 
+                        }
+                        h1 { 
+                            color: #D4AF37; 
+                            text-align: center; 
+                            margin-bottom: 10px; 
+                            font-size: 32px;
+                            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+                        }
+                        .subtitle { 
+                            color: #C19A2B; 
+                            text-align: center;
+                            margin-bottom: 30px; 
+                            font-size: 16px; 
+                        }
+                        .info-section { 
+                            background: linear-gradient(135deg, #f5f3e8, #ede8d5); 
+                            padding: 20px; 
+                            border-radius: 12px; 
+                            margin-bottom: 25px;
+                            border-left: 5px solid #D4AF37;
+                        }
+                        .info-section p { 
+                            margin: 8px 0; 
+                            color: #555; 
+                        }
+                        table { 
+                            width: 100%; 
+                            border-collapse: separate; 
+                            border-spacing: 0; 
+                            margin-top: 25px;
+                            border-radius: 12px;
+                            overflow: hidden;
+                            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+                        }
+                        th { 
+                            background: linear-gradient(135deg, #D4AF37, #C19A2B); 
+                            color: white; 
+                            padding: 15px 12px; 
+                            text-align: center;
+                            font-weight: 600;
+                            font-size: 13px;
+                            text-transform: uppercase;
+                            letter-spacing: 0.5px;
+                        }
+                        th:first-child {
+                            text-align: left;
+                        }
+                        td { 
+                            border-bottom: 1px solid #e0e0e0; 
+                            padding: 14px 12px;
+                            background: white;
+                            color: #333;
+                            text-align: center;
+                        }
+                        td:first-child {
+                            text-align: left;
+                            font-weight: 600;
+                            color: #C19A2B;
+                        }
+                        tr:nth-child(even) td { 
+                            background: #fafafa; 
+                        }
+                        tr:last-child td { 
+                            border-bottom: none; 
+                        }
+                        
+                        .observacoes-section {
+                            margin-top: 40px;
+                        }
+                        
+                        .observacoes-title {
+                            color: #D4AF37;
+                            font-size: 22px;
+                            margin-bottom: 20px;
+                            border-bottom: 3px solid #D4AF37;
+                            padding-bottom: 10px;
+                        }
+                        
+                        .observacao-box {
+                            background: linear-gradient(135deg, #f5f3e8, #ede8d5);
+                            padding: 20px;
+                            border-radius: 12px;
+                            margin-bottom: 20px;
+                            border-left: 5px solid #2196F3;
+                            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+                        }
+                        
+                        .obs-header {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            margin-bottom: 12px;
+                            flex-wrap: wrap;
+                            gap: 10px;
+                        }
+                        
+                        .obs-disciplina {
+                            font-weight: bold;
+                            color: #2196F3;
+                            font-size: 16px;
+                        }
+                        
+                        .obs-data {
+                            color: #888;
+                            font-size: 13px;
+                        }
+                        
+                        .obs-professor {
+                            color: #C19A2B;
+                            font-weight: 600;
+                            margin-bottom: 10px;
+                            font-size: 14px;
+                        }
+                        
+                        .obs-texto {
+                            color: #555;
+                            line-height: 1.6;
+                            font-size: 14px;
+                        }
+                        
+                        .footer { 
+                            margin-top: 40px; 
+                            text-align: center; 
+                            font-size: 12px; 
+                            color: #888;
+                            padding-top: 30px;
+                            border-top: 2px solid #D4AF37;
+                        }
+                        .footer p { 
+                            margin: 5px 0; 
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <h1><i class="fas fa-clipboard-list"></i> Boletim Escolar</h1>
+                        <div class="subtitle">Sistema Escolar JK - Visualização Responsável</div>
+                        
+                        <div class="info-section">
+                            <p><strong>Estudante:</strong> ${currentUser.alunoVinculado?.nome || 'Não informado'}</p>
+                            <p><strong>Matrícula:</strong> ${currentUser.alunoVinculado?.matricula || 'Não informado'}</p>
+                            <p><strong>CPF (Protegido):</strong> ${mascararCPF(currentUser.alunoVinculado?.cpf)}</p>
+                            <p><strong>Turma:</strong> ${currentUser.alunoVinculado?.serie}ª Série ${currentUser.alunoVinculado?.turma}</p>
+                            <p><strong>Responsável:</strong> ${currentUser.name}</p>
+                            <p><strong>Data de Emissão:</strong> ${new Date().toLocaleDateString('pt-BR')} às ${new Date().toLocaleTimeString('pt-BR')}</p>
+                        </div>
+                        
+                        <!-- Indicador de Bimestre Atual -->
+                        <div style="background: var(--primary-yellow); color: #000; padding: 15px 25px; border-radius: var(--border-radius-md); margin-bottom: 25px; text-align: center; font-weight: 700; font-size: 18px; box-shadow: var(--shadow-sm);">
+                            <i class="fas fa-calendar-alt"></i> Bimestre Atual: <span id="bimestreAtualResponsavel">1º Bimestre</span>
+                        </div>
+                        
+                        <table class="grades-table">
+                            <thead>
+                                <tr>
+                                    <th>Disciplina</th>
+                                    <th>Nota</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${disciplinas.map(disc => `
+                                    <tr>
+                                        <td class="subject-cell">${disc.nome}</td>
+                                        <td class="grade-cell grade-${getGradeClassFromValue(disc.bim1)}">${disc.bim1}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                        
+                        <div class="observacoes-section">
+                            <h3 class="observacoes-title">Observações dos Professores</h3>
+                            ${observacoes.map(obs => `
+                                <div class="observacao-box">
+                                    <div class="obs-header">
+                                        <span class="obs-disciplina">${obs.disciplina}</span>
+                                        <span class="obs-data">${obs.data}</span>
+                                    </div>
+                                    <div class="obs-professor">${obs.professor}</div>
+                                    <div class="obs-texto">${obs.texto}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <div class="footer">
+                            <p><strong>Sistema Escolar JK - Gestão Acadêmica</strong></p>
+                            <p>Boletim gerado para o responsável</p>
+                            <p>${new Date().toLocaleString('pt-BR')}</p>
+                        </div>
+                    </div>
+                </body>
+                </html>
+            `;
+            
+            // Criar e fazer download do PDF
+            const printWindow = window.open('', '', 'height=800,width=1000');
+            printWindow.document.write(htmlContent);
+            printWindow.document.close();
+            
+            setTimeout(() => {
+                printWindow.print();
+                showAlert('PDF gerado! Use a opção "Salvar como PDF" na janela de impressão.', 'success');
+            }, 500);
+        }
+        
+        function toggleHighContrast() {
+            document.body.classList.toggle('high-contrast');
+            const isActive = document.body.classList.contains('high-contrast');
+            showAlert(isActive ? 'Alto contraste ativado' : 'Alto contraste desativado', 'success');
+        }
+        
+        function toggleDyslexiaFont() {
+            document.body.classList.toggle('dyslexia-font');
+            const isActive = document.body.classList.contains('dyslexia-font');
+            showAlert(isActive ? 'Fonte para dislexia ativada' : 'Fonte padrão restaurada', 'success');
+        }
+        
+        function toggleReducedMotion() {
+            document.body.classList.toggle('reduced-motion');
+            const isActive = document.body.classList.contains('reduced-motion');
+            showAlert(isActive ? 'Animações reduzidas' : 'Animações restauradas', 'success');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Professor - Sistema Escolar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Menu de Acessibilidade -->
+    <div class="accessibility-menu">
+        <button class="accessibility-toggle">
+            ♿ Acessibilidade
+        </button>
+        <div class="accessibility-options" id="accessibilityOptions">
+            <a href="#" onclick="toggleAccessibility('daltonismo')">Modo Daltônico</a>
+            <a href="#" onclick="toggleAccessibility('preto-e-branco')">Preto e Branco</a>
+            <a href="#" onclick="toggleAccessibility('nenhum')">Restaurar Padrão</a>
+        </div>
+    </div>
+
+    <!-- Legendas de Acessibilidade -->
+    <button class="legend-toggle" onclick="toggleLegend()">Ver Legenda (Daltonismo)</button>
+    <div class="daltonismo-legend" id="daltonismoLegend">
+        <button class="legend-close-btn" onclick="toggleLegend()" aria-label="Fechar legenda">×</button>
+        <div class="legend-item">
+            <div class="legend-symbol" style="background: #0066cc;">★</div>
+            <span class="legend-text">Excelente</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-symbol" style="background: #666666;">●</div>
+            <span class="legend-text">Bom</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-symbol" style="background: #cc6600;">▲</div>
+            <span class="legend-text">Regular / Atenção</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-symbol" style="background: #000000;">✖</div>
+            <span class="legend-text">Insatisfatório</span>
+        </div>
+    </div>
+
+    <button class="pb-legend-toggle" onclick="togglePbLegend()">Ver Legenda (P&B)</button>
+    <div class="pb-legend" id="pbLegend">
+        <button class="legend-close-btn" onclick="togglePbLegend()" aria-label="Fechar legenda">×</button>
+        <div class="legend-item">
+            <div class="legend-symbol" style="background: #666;">■</div>
+            <span class="legend-text">Excelente</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-symbol" style="background: #666;">●</div>
+            <span class="legend-text">Bom</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-symbol" style="background: #666;">▲</div>
+            <span class="legend-text">Regular / Atenção</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-symbol" style="background: #666;">✖</div>
+            <span class="legend-text">Insatisfatório</span>
+        </div>
+    </div>
+
+    <!-- Elementos Decorativos removidos -->
+
+    <div class="app-container">
+        <!-- DASHBOARD PROFESSOR -->
+        <div class="page active" id="dashboardProfessorPage">
+            <div class="main-layout">
+                <nav class="sidebar">
+                    <!-- Logo ProJK -->
+                    <div class="projk-logo-container" style="padding: 20px 15px; border-bottom: 2px solid rgba(52, 152, 219, 0.2); margin-bottom: 20px;">
+                        <div class="projk-logo" style="font-size: 36px;">
+                            <span class="logo-pro">Pro</span>
+                            <span class="logo-j">J</span>
+                            <span class="logo-k">K</span>
+                            <span class="logo-dot">●</span>
+                        </div>
+                        <p class="logo-subtitle" style="font-size: 12px; margin-top: 5px;">Sistema Escolar</p>
+                    </div>
+                    <div class="menu-item active" onclick="showProfessorSection('boletim')">
+                        <div class="menu-icon"><i class="fas fa-clipboard-list"></i></div>
+                        <span>Boletim</span>
+                    </div>
+
+                    <div class="menu-item" onclick="showProfessorSection('turmas')">
+                        <div class="menu-icon"><i class="fas fa-users"></i></div>
+                        <span>Turmas</span>
+                    </div>
+
+                    <div class="menu-item" onclick="showProfessorSection('disciplinas')">
+                        <div class="menu-icon"><i class="fas fa-book"></i></div>
+                        <span>Disciplinas</span>
+                    </div>
+
+                    <div class="menu-item" onclick="showProfessorSection('perfil')">
+                        <div class="menu-icon"><i class="fas fa-user"></i></div>
+                        <span>Perfil</span>
+                    </div>
+
+                    <div class="menu-item" onclick="logout()">
+                        <div class="menu-icon"><i class="fas fa-sign-out-alt"></i></div>
+                        <span>Sair</span>
+                    </div>
+                </nav>
+
+                <main class="main-content">
+                    <!-- SEÇÃO BOLETIM -->
+                    <div id="professorBoletimSection">
+                        <div class="professor-dashboard-container">
+                            <div class="professor-header">
+                                <h1 class="professor-title">Painel do Professor</h1>
+                            </div>
+
+                            <!-- Ferramentas Rápidas -->
+                            <div class="professor-tools-grid">
+                            <button class="tool-card" onclick="adicionarSimulado()">
+                                <div class="tool-icon"><i class="fas fa-edit"></i></div>
+                                <div class="tool-title">Adicionar Simulado</div>
+                                <div class="tool-desc">Criar nova avaliação</div>
+                            </button>
+                            <button class="tool-card" onclick="calcularMedias()">
+                                <div class="tool-icon"><i class="fas fa-calculator"></i></div>
+                                <div class="tool-title">Calcular Médias</div>
+                                <div class="tool-desc">Médias automáticas</div>
+                            </button>
+                            <button class="tool-card" onclick="lancarFaltas()">
+                                <div class="tool-icon"><i class="fas fa-calendar-check"></i></div>
+                                <div class="tool-title">Lançar Faltas</div>
+                                <div class="tool-desc">Registrar ausências</div>
+                            </button>
+                            <button class="tool-card" onclick="gerarRelatorios()">
+                                <div class="tool-icon"><i class="fas fa-chart-bar"></i></div>
+                                <div class="tool-title">Relatórios</div>
+                                <div class="tool-desc">Gerar análises</div>
+                            </button>
+                        </div>
+
+                        <!-- Seção de Simulados Criados -->
+                        <div style="background: #ffffff; padding: 25px; border-radius: var(--border-radius-lg); margin-top: 30px; border: 2px solid rgba(52, 152, 219, 0.2); box-shadow: var(--shadow-sm);">
+                            <h3 style="color: var(--primary-blue); font-size: 22px; margin-bottom: 20px; font-weight: 700; display: flex; align-items: center; gap: 10px;">
+                                <i class="fas fa-clipboard-list"></i> Simulados Criados
+                                <button class="btn btn-edit" onclick="carregarSimulados()" style="margin-left: auto; padding: 8px 16px; font-size: 14px;">
+                                    <i class="fas fa-sync-alt"></i> Atualizar
+                                </button>
+                            </h3>
+                            <div id="simuladosList" style="display: grid; gap: 15px;">
+                                <p style="text-align: center; color: var(--text-medium); padding: 20px;">Nenhum simulado criado ainda. Use o botão "Adicionar Simulado" acima para criar um novo.</p>
+                            </div>
+                        </div>
+
+                        <!-- Botão Toggle para Gerenciar Notas -->
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <button class="btn-toggle-grades" onclick="toggleGerenciarNotas()" id="btnToggleGrades">
+                                <i class="fas fa-eye"></i> Mostrar Gerenciamento de Notas
+                            </button>
+                        </div>
+
+                        <!-- Seção de Gerenciamento de Notas (oculta por padrão) -->
+                        <div id="gerenciarNotasSection" style="display: none;">
+                        <h3 style="text-align: center; color: var(--primary-blue); font-size: 22px; margin-bottom: 20px; font-weight: 700;"><i class="fas fa-clipboard-list"></i> Gerenciar Notas da Turma</h3>
+                        
+                        <table class="grades-table" id="gradesTableProfessor">
+                            <thead>
+                                <tr>
+                                    <th>Categoria</th>
+                                    <th>João Silva</th>
+                                    <th>Maria Santos</th>
+                                    <th>Pedro Oliveira</th>
+                                    <th>Ana Costa</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="subject-cell">Frequência</td>
+                                    <td class="content-cell" onclick="editNote(this, 'João', 'Frequência')">95%</td>
+                                    <td class="content-cell" onclick="editNote(this, 'Maria', 'Frequência')">88%</td>
+                                    <td class="content-cell" onclick="editNote(this, 'Pedro', 'Frequência')">92%</td>
+                                    <td class="content-cell" onclick="editNote(this, 'Ana', 'Frequência')">85%</td>
+                                </tr>
+                                <tr>
+                                    <td class="subject-cell">Notas</td>
+                                    <td class="content-cell" onclick="editNote(this, 'João', 'Notas')">9.5</td>
+                                    <td class="content-cell" onclick="editNote(this, 'Maria', 'Notas')">8.2</td>
+                                    <td class="content-cell" onclick="editNote(this, 'Pedro', 'Notas')">7.8</td>
+                                    <td class="content-cell" onclick="editNote(this, 'Ana', 'Notas')">9.0</td>
+                                </tr>
+                                <tr>
+                                    <td class="subject-cell">Comportamento</td>
+                                    <td class="content-cell" onclick="editNote(this, 'João', 'Comportamento')">Excelente</td>
+                                    <td class="content-cell" onclick="editNote(this, 'Maria', 'Comportamento')">Bom</td>
+                                    <td class="content-cell" onclick="editNote(this, 'Pedro', 'Comportamento')">Bom</td>
+                                    <td class="content-cell" onclick="editNote(this, 'Ana', 'Comportamento')">Excelente</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div style="text-align: center; display: flex; gap: 15px; justify-content: center; margin-top: 25px;">
+                            <button class="btn btn-save" onclick="salvarAlteracoesNotas()"><i class="fas fa-save"></i> Salvar Alterações</button>
+                            <button class="btn btn-edit" onclick="exportGrades()"><i class="fas fa-file-pdf"></i> Exportar PDF</button>
+                            <button class="btn" onclick="verEstatisticas()"><i class="fas fa-chart-line"></i> Ver Estatísticas</button>
+                            </div>
+                            </div> <!-- Fecha gerenciarNotasSection -->
+                        </div> <!-- Fecha professor-dashboard-container -->
+                    </div>
+
+                    <!-- SEÇÃO TURMAS -->
+                    <div id="professorTurmasSection" style="display: none;">
+                        <div class="professor-dashboard-container">
+                            <div class="professor-header">
+                                <h1 class="professor-title">Minhas Turmas</h1>
+                            </div>
+
+                        <div class="turma-item">
+                            <div class="turma-info">
+                                <div class="turma-icon"><i class="fas fa-users"></i></div>
+                                <div class="turma-details">
+                                    <h3>Turma: 1° ano A</h3>
+                                    <p>Matemática - 5 alunos</p>
+                                </div>
+                            </div>
+                            <button class="btn-gerenciar" onclick="gerenciarTurma('1A')">Gerenciar</button>
+                        </div>
+
+                        <div class="turma-item">
+                            <div class="turma-info">
+                                <div class="turma-icon"><i class="fas fa-users"></i></div>
+                                <div class="turma-details">
+                                    <h3>Turma: 2° ano B</h3>
+                                    <p>Matemática - 4 alunos</p>
+                                </div>
+                            </div>
+                            <button class="btn-gerenciar" onclick="gerenciarTurma('2B')">Gerenciar</button>
+                        </div>
+
+                        <div class="turma-item">
+                            <div class="turma-info">
+                                <div class="turma-icon"><i class="fas fa-users"></i></div>
+                                <div class="turma-details">
+                                    <h3>Turma: 3° ano A</h3>
+                                    <p>Matemática - 5 alunos</p>
+                                </div>
+                            </div>
+                            <button class="btn-gerenciar" onclick="gerenciarTurma('3A')">Gerenciar</button>
+                        </div>
+                        </div> <!-- Fecha professor-dashboard-container -->
+                    </div>
+
+                    <!-- SEÇÃO DISCIPLINAS -->
+                    <div id="professorDisciplinasSection" style="display: none;">
+                        <div class="professor-dashboard-container">
+                            <div class="professor-header">
+                                <h1 class="professor-title">Minhas Disciplinas</h1>
+                                <button class="btn btn-save" onclick="adicionarNovaDisciplina()"><i class="fas fa-plus"></i> Nova Disciplina</button>
+                            </div>
+
+                        <div style="display: grid; gap: 20px;">
+                            <div class="disciplina-card" style="background: #ffffff; padding: 25px; border-radius: var(--border-radius-lg); border-left: 5px solid var(--primary-yellow); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); border: 2px solid rgba(241, 196, 15, 0.3);">
+                                <h3 style="color: var(--text-dark); margin-bottom: 10px; font-size: 20px; font-weight: 700;"><i class="fas fa-calculator"></i> Matemática</h3>
+                                <p style="color: var(--text-medium); margin-bottom: 15px; font-size: 15px; font-weight: 500;">3 turmas ativas • 14 alunos total</p>
+                                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                    <button class="btn btn-edit" onclick="gerenciarDisciplina('Matemática')"><i class="fas fa-cog"></i> Gerenciar</button>
+                                    <button class="btn btn-save" onclick="gerenciarConteudo('Matemática')"><i class="fas fa-book-open"></i> Conteúdo</button>
+                                    <button class="btn" onclick="verEstatisticasDisciplina('Matemática')"><i class="fas fa-chart-line"></i> Estatísticas</button>
+                                </div>
+                            </div>
+
+                            <div class="disciplina-card" style="background: #ffffff; padding: 25px; border-radius: var(--border-radius-lg); border-left: 5px solid var(--primary-blue); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); border: 2px solid rgba(52, 152, 219, 0.3);">
+                                <h3 style="color: var(--text-dark); margin-bottom: 10px; font-size: 20px; font-weight: 700;"><i class="fas fa-atom"></i> Física (Apoio)</h3>
+                                <p style="color: var(--text-medium); margin-bottom: 15px; font-size: 15px; font-weight: 500;">1 turma ativa • 4 alunos total</p>
+                                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                    <button class="btn btn-edit" onclick="gerenciarDisciplina('Física (Apoio)')"><i class="fas fa-cog"></i> Gerenciar</button>
+                                    <button class="btn btn-save" onclick="gerenciarConteudo('Física (Apoio)')"><i class="fas fa-book-open"></i> Conteúdo</button>
+                                    <button class="btn" onclick="verEstatisticasDisciplina('Física (Apoio)')"><i class="fas fa-chart-line"></i> Estatísticas</button>
+                                </div>
+                            </div>
+                        </div>
+                        </div> <!-- Fecha professor-dashboard-container -->
+                    </div>
+
+                    <!-- SEÇÃO PERFIL PROFESSOR -->
+                    <div id="professorPerfilSection" style="display: none;">
+                        <div class="professor-dashboard-container">
+                            <div class="professor-header">
+                                <h1 class="professor-title">Perfil do Professor</h1>
+                            </div>
+                            
+                            <div style="text-align: center; padding: 40px 20px;">
+                                <div style="position: relative; display: inline-block; margin-bottom: 25px;">
+                                    <div style="width: 150px; height: 150px; border-radius: 50%; background: var(--primary-blue); display: flex; align-items: center; justify-content: center; font-size: 64px; font-weight: 800; color: white; box-shadow: 0 8px 25px rgba(0,0,0,0.2); border: 6px solid white; cursor: pointer; transition: all 0.3s ease;" onclick="changePhoto()" id="professorPerfilAvatar">
+                                        <span id="professorPerfilInitial">CS</span>
+                                    </div>
+                                    <div style="position: absolute; bottom: 10px; right: 10px; background: var(--primary-yellow); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 4px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.2); cursor: pointer;" onclick="changePhoto()">
+                                        <i class="fas fa-camera" style="color: #000; font-size: 16px;"></i>
+                                    </div>
+                                </div>
+                                <h2 style="color: var(--text-dark); font-size: 28px; font-weight: 700; margin-bottom: 10px;" id="professorPerfilNome">Prof. Carlos Silva</h2>
+                                <div style="display: inline-block; background: var(--primary-blue); color: white; padding: 8px 20px; border-radius: 20px; font-size: 15px; font-weight: 600; margin-bottom: 30px;" id="professorPerfilDisciplina">
+                                    Disciplina: Matemática
+                                </div>
+                            </div>
+
+                        <!-- Links de Segurança e Políticas -->
+                        <div style="background: #f5f5f5; padding: 20px; border-radius: 15px; margin: 25px 0; border-left: 5px solid #2196F3;">
+                            <h3 style="color: #1976D2; font-size: 16px; margin-bottom: 15px; text-align: center;"><i class="fas fa-shield-alt"></i> Segurança e Privacidade</h3>
+                            <div style="display: grid; gap: 10px;">
+                                <button class="info-link" onclick="mostrarPoliticaProtecaoDados()">
+                                    <i class="fas fa-shield-alt"></i> Política de Proteção de Dados (LGPD)
+                                </button>
+                                <button class="info-link" onclick="showAlert('Última alteração: Hoje, às ${new Date().toLocaleTimeString()}', 'success')">
+                                    <i class="fas fa-history"></i> Histórico de Alterações
+                                </button>
+                                <button class="info-link" onclick="showAlert('Seu acesso é monitorado para segurança do sistema', 'success')">
+                                    <i class="fas fa-key"></i> Log de Acessos
+                                </button>
+                            </div>
+                        </div>
+
+                            <div style="text-align: center;">
+                                <button class="btn btn-edit" onclick="editProfessorProfile()"><i class="fas fa-edit"></i> Editar Perfil</button>
+                                <button class="btn btn-save" onclick="saveProfessorProfile()"><i class="fas fa-save"></i> Salvar e Sair</button>
+                            </div>
+                        </div> <!-- Fecha professor-dashboard-container -->
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <div class="corner-decoration bottom-left"></div>
+        <div class="corner-decoration bottom-right"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Função de navegação para páginas separadas
+        function navigateToPage(page) {
+            window.location.href = page;
+        }
+
+        // Modificar função logout para redirecionar
+        function logout() {
+            localStorage.removeItem('currentUser');
+            showAlert('Logout realizado com sucesso!', 'success');
+            setTimeout(() => navigateToPage('login.html'), 1500);
+        }
+
+        // Verificar se o usuário está logado
+        document.addEventListener('DOMContentLoaded', function() {
+            // Carregar dados do usuário do localStorage
+            const userData = localStorage.getItem('currentUser');
+            const userEmail = localStorage.getItem('currentUserEmail');
+            
+            if (!userData || !userEmail) {
+                navigateToPage('login.html');
+                return;
+            }
+
+            // Definir currentUser no escopo global (window) para acesso de todas as funções
+            window.currentUser = JSON.parse(userData);
+            
+            // Garantir que o email esteja no objeto currentUser
+            if (!window.currentUser.email) {
+                window.currentUser.email = userEmail;
+            }
+            
+            if (window.currentUser.type !== 'professor') {
+                navigateToPage('login.html');
+                return;
+            }
+
+            // Atualizar informações do perfil
+            const nomeElement = document.getElementById('professorPerfilNome');
+            const disciplinaElement = document.getElementById('professorPerfilDisciplina');
+            const professorInitialEl = document.getElementById('professorPerfilInitial');
+            
+            if (nomeElement) nomeElement.textContent = window.currentUser.name;
+            if (disciplinaElement) disciplinaElement.textContent = `Disciplina: ${window.currentUser.disciplina}`;
+            
+            // Gerar iniciais do professor para o avatar
+            if (professorInitialEl && window.currentUser.name) {
+                const names = window.currentUser.name.trim().split(' ');
+                let initials = '';
+                if (names.length >= 2) {
+                    initials = names[0].charAt(0).toUpperCase() + names[names.length - 1].charAt(0).toUpperCase();
+                } else if (names.length === 1 && names[0].length >= 2) {
+                    initials = names[0].charAt(0).toUpperCase() + names[0].charAt(1).toUpperCase();
+                } else {
+                    initials = 'PR';
+                }
+                professorInitialEl.textContent = initials || 'PR';
+            }
+            
+            // Debug: Verificar se currentUser foi carregado corretamente
+            console.log('Usuário carregado:', window.currentUser);
+            
+            // Carregar simulados ao carregar a página
+            if (typeof carregarSimulados === 'function') {
+                carregarSimulados();
+            }
+        });
+    </script>
+</body>
+</html>

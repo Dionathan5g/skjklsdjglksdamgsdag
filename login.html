@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Sistema Escolar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Elementos Decorativos removidos -->
+
+    <div class="app-container">
+        <!-- PÁGINA DE LOGIN -->
+        <div class="page active" id="loginPage">
+            <div class="login-page">
+                <div class="login-container">
+                    <div class="header">
+                        <!-- Logo ProJK -->
+                        <div class="projk-logo-container">
+                            <div class="projk-logo">
+                                <span class="logo-pro">Pro</span>
+                                <span class="logo-j">J</span>
+                                <span class="logo-k">K</span>
+                                <span class="logo-dot">●</span>
+                            </div>
+                            <p class="logo-subtitle">Sistema Escolar</p>
+                        </div>
+                        <h1 class="title">Bem-vindo de volta!</h1>
+                        <p class="subtitle-text">Faça login para acessar sua conta</p>
+                    </div>
+
+                    <div class="form-container">
+                        <!-- Informações de Credenciais -->
+                        <div class="credentials-info">
+                            <p><b>Credenciais de Teste (senha: 12345678)</b></p>
+                            <p><b>Aluno:</b> aluno@teste.com</p>
+                            <p><b>Professor:</b> prof@teste.com</p>
+                            <p><b>Responsável:</b> resp@teste.com</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">E-mail</label>
+                            <div class="email-container">
+                                <span class="email-icon"><i class="fas fa-envelope"></i></span>
+                                <input type="email" class="form-input email-input" id="loginEmail"
+                                    placeholder="seu.email@gmail.com">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Senha</label>
+                            <div class="password-container">
+                                <span class="password-icon"><i class="fas fa-lock"></i></span>
+                                <input type="password" class="form-input password-input" id="loginPassword"
+                                    placeholder="Mínimo 8 caracteres">
+                            </div>
+                        </div>
+
+                        <div class="register-section">
+                            <div class="register-text">
+                                Não tem uma conta? <a href="#" onclick="navigateToPage('cadastro-aluno.html')">Criar conta</a>
+                            </div>
+                        </div>
+
+                        <div class="forgot-password">
+                            <a href="#" onclick="navigateToPage('recuperar-senha.html')">Esqueceu sua senha? Clique Aqui</a>
+                        </div>
+
+                        <button class="login-button" onclick="doLogin()">Entrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Função de navegação para páginas separadas
+        function navigateToPage(page) {
+            window.location.href = page;
+        }
+
+        // Modificar função doLogin para redirecionar para dashboards
+        function doLogin() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (!email || !password) {
+                showAlert('Por favor, preencha todos os campos!', 'error');
+                return;
+            }
+
+            const user = users[email];
+            if (!user || user.password !== password) {
+                showAlert('E-mail ou senha incorretos!', 'error');
+                return;
+            }
+
+            // Salvar dados do usuário no localStorage para compartilhar entre páginas
+            const userWithEmail = { ...user, email: email };
+            localStorage.setItem('currentUser', JSON.stringify(userWithEmail));
+            localStorage.setItem('currentUserEmail', email);
+            showAlert(`Bem-vindo, ${user.name}!`, 'success');
+
+            // Redirecionar para dashboard correto
+            setTimeout(() => {
+                if (user.type === 'aluno') {
+                    navigateToPage('dashboard-aluno.html');
+                } else if (user.type === 'professor') {
+                    navigateToPage('dashboard-professor.html');
+                } else if (user.type === 'responsavel') {
+                    navigateToPage('dashboard-responsavel.html');
+                } else if (user.type === 'direcao') {
+                    navigateToPage('dashboard-direcao.html');
+                } else if (user.type === 'admin') {
+                    navigateToPage('dashboard-admin.html');
+                }
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro Responsável - Sistema Escolar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Elementos Decorativos removidos -->
+
+    <div class="app-container">
+        <!-- CADASTRO RESPONSÁVEL -->
+        <div class="page active" id="cadastroResponsavelPage">
+            <div class="login-page">
+                <div class="login-container">
+                    <div class="header">
+                        <!-- Logo ProJK -->
+                        <div class="projk-logo-container">
+                            <div class="projk-logo">
+                                <span class="logo-pro">Pro</span>
+                                <span class="logo-j">J</span>
+                                <span class="logo-k">K</span>
+                                <span class="logo-dot">●</span>
+                            </div>
+                            <p class="logo-subtitle">Sistema Escolar</p>
+                        </div>
+                        
+                        <!-- Seletor de Tipo de Usuário -->
+                        <div class="user-type-selector">
+                            <h3>Quem é você?</h3>
+                            <div class="type-buttons">
+                                <button class="type-btn" onclick="navigateToPage('cadastro-aluno.html')">
+                                    <span class="type-icon"><i class="fas fa-graduation-cap"></i></span>
+                                    <span class="type-label">Aluno</span>
+                                </button>
+                                <button class="type-btn" onclick="navigateToPage('cadastro-professor.html')">
+                                    <span class="type-icon"><i class="fas fa-chalkboard-teacher"></i></span>
+                                    <span class="type-label">Professor</span>
+                                </button>
+                                <button class="type-btn active" onclick="navigateToPage('cadastro-responsavel.html')">
+                                    <span class="type-icon"><i class="fas fa-users"></i></span>
+                                    <span class="type-label">Responsável</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <h1 class="title"><i class="fas fa-users"></i> Cadastro - Responsável</h1>
+                        <p style="color: #7f8c8d; font-size: 14px; margin-top: 10px;">Acompanhe o progresso do seu filho</p>
+                    </div>
+
+                    <div class="form-container">
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-id-card"></i> CPF do Responsável</label>
+                            <input type="text" class="form-input" id="responsavelCpf" placeholder="000.000.000-00"
+                                maxlength="14">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-user"></i> Nome Completo do Responsável</label>
+                            <input type="text" class="form-input" id="responsavelNome" placeholder="Digite seu nome completo">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-envelope"></i> E-mail</label>
+                            <div class="email-container">
+                                <span class="email-icon"><i class="fas fa-envelope"></i></span>
+                                <input type="email" class="form-input email-input" id="responsavelEmail"
+                                    placeholder="seu.email@gmail.com">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-link"></i> CPF do Aluno (para vinculação)</label>
+                            <input type="text" class="form-input" id="responsavelCpfAluno"
+                                placeholder="Digite o CPF do aluno" maxlength="14">
+                            <div style="margin-top: 8px; padding: 10px; background: #e3f2fd; border-radius: 8px; font-size: 13px; color: #1976D2;">
+                                <strong><i class="fas fa-info-circle"></i> Importante:</strong> Digite o CPF do aluno que você é responsável. Este CPF deve estar cadastrado no sistema.
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-lock"></i> Senha</label>
+                            <div class="password-container">
+                                <span class="password-icon"><i class="fas fa-key"></i></span>
+                                <input type="password" class="form-input password-input" id="responsavelSenha"
+                                    placeholder="Mínimo 8 caracteres">
+                            </div>
+                        </div>
+
+                        <button class="submit-button" onclick="cadastrarResponsavel()">Cadastrar-se Agora</button>
+
+                        <p style="text-align: center; margin-top: 20px;">
+                            <a href="#" onclick="navigateToPage('login.html')" style="color: #3498DB;">← Voltar ao Login</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Função de navegação para páginas separadas
+        function navigateToPage(page) {
+            window.location.href = page;
+        }
+
+        // Função para validar CPF
+        function validarCPF(cpf) {
+            cpf = cpf.replace(/\D/g, '');
+            if (cpf.length !== 11) return false;
+            if (/^(\d)\1+$/.test(cpf)) return false;
+            
+            let soma = 0;
+            for (let i = 0; i < 9; i++) {
+                soma += parseInt(cpf.charAt(i)) * (10 - i);
+            }
+            let resto = 11 - (soma % 11);
+            if (resto === 10 || resto === 11) resto = 0;
+            if (resto !== parseInt(cpf.charAt(9))) return false;
+            
+            soma = 0;
+            for (let i = 0; i < 10; i++) {
+                soma += parseInt(cpf.charAt(i)) * (11 - i);
+            }
+            resto = 11 - (soma % 11);
+            if (resto === 10 || resto === 11) resto = 0;
+            if (resto !== parseInt(cpf.charAt(10))) return false;
+            
+            return true;
+        }
+
+        // Modificar função cadastrarResponsavel para redirecionar
+        function cadastrarResponsavel() {
+            const cpf = document.getElementById('responsavelCpf').value;
+            const nome = document.getElementById('responsavelNome').value;
+            const email = document.getElementById('responsavelEmail').value;
+            const cpfAluno = document.getElementById('responsavelCpfAluno').value;
+            const senha = document.getElementById('responsavelSenha').value;
+
+            if (!cpf || !nome || !email || !cpfAluno || !senha) {
+                showAlert('Por favor, preencha todos os campos!', 'error');
+                return;
+            }
+
+            if (senha.length < 8) {
+                showAlert('A senha deve ter pelo menos 8 caracteres!', 'error');
+                return;
+            }
+
+            // Validar CPF do responsável
+            if (!validarCPF(cpf)) {
+                showAlert('CPF do responsável inválido! Por favor, verifique o número digitado.', 'error');
+                return;
+            }
+
+            // Validar CPF do aluno
+            if (!validarCPF(cpfAluno)) {
+                showAlert('CPF do aluno inválido! Por favor, verifique o número digitado.', 'error');
+                return;
+            }
+
+            // Validar unicidade do CPF do responsável
+            const cpfLimpo = cpf.replace(/\D/g, '');
+            const cpfExistente = Object.values(users).find(u => 
+                u.type === 'responsavel' && u.cpfResponsavel && u.cpfResponsavel.replace(/\D/g, '') === cpfLimpo
+            );
+            if (cpfExistente) {
+                showAlert('Este CPF já está cadastrado!', 'error');
+                return;
+            }
+
+            if (users[email]) {
+                showAlert('Este e-mail já está cadastrado!', 'error');
+                return;
+            }
+
+            // Verificar se o aluno existe
+            const cpfAlunoLimpo = cpfAluno.replace(/\D/g, '');
+            const alunoEncontrado = Object.values(users).find(u => 
+                u.type === 'aluno' && u.cpfAluno && u.cpfAluno.replace(/\D/g, '') === cpfAlunoLimpo
+            );
+            
+            if (!alunoEncontrado) {
+                showAlert('Aluno não encontrado! Verifique o CPF do aluno digitado.', 'error');
+                return;
+            }
+
+            const newUser = {
+                password: senha,
+                type: 'responsavel',
+                name: nome,
+                cpf: cpf,
+                estudante: `Estudante - ${cpfAluno}`
+            };
+            
+            users[email] = newUser;
+            
+            // Salvar dados do usuário no localStorage para login automático
+            localStorage.setItem('currentUser', JSON.stringify(newUser));
+
+            showAlert('Cadastro realizado com sucesso! Redirecionando...', 'success');
+            setTimeout(() => navigateToPage('dashboard-responsavel.html'), 2000);
+        }
+    </script>
+</body>
+</html>

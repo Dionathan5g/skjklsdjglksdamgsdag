@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro Admin - Sistema Escolar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Elementos Decorativos -->
+    <div class="bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- CADASTRO ADMIN -->
+        <div class="page active" id="cadastroAdminPage">
+            <div class="login-page">
+                <div class="login-container">
+                    <div class="header">
+                        <!-- Logo ProJK -->
+                        <div class="projk-logo-container">
+                            <div class="projk-logo">
+                                <span class="logo-pro">Pro</span>
+                                <span class="logo-j">J</span>
+                                <span class="logo-k">K</span>
+                                <span class="logo-dot">●</span>
+                            </div>
+                            <p class="logo-subtitle">Sistema Escolar</p>
+                        </div>
+                        
+                        <h1 class="title"><i class="fas fa-cog"></i> Cadastro - Administrador</h1>
+                        <p style="color: #7f8c8d; font-size: 14px; margin-top: 10px;">Acesso total ao sistema</p>
+                    </div>
+
+                    <div class="form-container">
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-id-card"></i> CPF</label>
+                            <input type="text" class="form-input" id="adminCpf" placeholder="000.000.000-00"
+                                maxlength="14">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Nome Completo</label>
+                            <input type="text" class="form-input" id="adminNome" placeholder="Digite seu nome completo">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">E-mail Institucional</label>
+                            <div class="email-container">
+                                <span class="email-icon"><i class="fas fa-envelope"></i></span>
+                                <input type="email" class="form-input email-input" id="adminEmail"
+                                    placeholder="admin@escola.com">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-key"></i> Credencial Institucional</label>
+                            <input type="text" class="form-input" id="adminCredencial" placeholder="Código de acesso administrativo">
+                            <div style="margin-top: 8px; padding: 10px; background: #fff3cd; border-radius: 8px; font-size: 13px; color: #856404;">
+                                <strong><i class="fas fa-info-circle"></i> Importante:</strong> Credencial fornecida pela instituição para acesso administrativo.
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-lock"></i> Senha</label>
+                            <div class="password-container">
+                                <span class="password-icon"><i class="fas fa-key"></i></span>
+                                <input type="password" class="form-input password-input" id="adminSenha"
+                                    placeholder="Mínimo 8 caracteres">
+                            </div>
+                        </div>
+
+                        <button class="submit-button" onclick="cadastrarAdmin()">Cadastrar-se Agora</button>
+
+                        <p style="text-align: center; margin-top: 20px;">
+                            <a href="#" onclick="navigateToPage('login.html')" style="color: #3498DB;">← Voltar ao Login</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Função de navegação para páginas separadas
+        function navigateToPage(page) {
+            window.location.href = page;
+        }
+
+        // Máscara de CPF
+        document.getElementById('adminCpf').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length <= 11) {
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                e.target.value = value;
+            }
+        });
+
+        // Modificar função cadastrarAdmin para redirecionar
+        function cadastrarAdmin() {
+            const cpf = document.getElementById('adminCpf').value;
+            const nome = document.getElementById('adminNome').value;
+            const email = document.getElementById('adminEmail').value;
+            const credencial = document.getElementById('adminCredencial').value;
+            const senha = document.getElementById('adminSenha').value;
+
+            if (!cpf || !nome || !email || !credencial || !senha) {
+                showAlert('Por favor, preencha todos os campos!', 'error');
+                return;
+            }
+
+            if (senha.length < 8) {
+                showAlert('A senha deve ter pelo menos 8 caracteres!', 'error');
+                return;
+            }
+
+            // Validar unicidade do CPF
+            const cpfLimpo = cpf.replace(/\D/g, '');
+            const cpfExistente = Object.values(users).find(u => 
+                (u.type === 'admin' || u.type === 'direcao') && 
+                u.cpf && u.cpf.replace(/\D/g, '') === cpfLimpo
+            );
+            if (cpfExistente) {
+                showAlert('Este CPF já está cadastrado!', 'error');
+                return;
+            }
+
+            if (users[email]) {
+                showAlert('Este e-mail já está cadastrado!', 'error');
+                return;
+            }
+
+            const newUser = {
+                password: senha,
+                type: 'admin',
+                name: nome,
+                cpf: cpf,
+                credencial: credencial,
+                active: true
+            };
+            
+            users[email] = newUser;
+            
+            // Salvar dados do usuário no localStorage para login automático
+            localStorage.setItem('currentUser', JSON.stringify(newUser));
+            localStorage.setItem('currentUserEmail', email);
+
+            showAlert('Cadastro realizado com sucesso! Redirecionando...', 'success');
+            setTimeout(() => navigateToPage('dashboard-admin.html'), 2000);
+        }
+    </script>
+</body>
+</html>
+

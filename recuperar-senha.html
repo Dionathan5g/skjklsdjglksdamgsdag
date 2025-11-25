@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Senha - Sistema Escolar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Menu de Acessibilidade -->
+    <div class="accessibility-menu">
+        <button class="accessibility-toggle">
+            ♿ Acessibilidade
+        </button>
+        <div class="accessibility-options" id="accessibilityOptions">
+            <a href="#" onclick="toggleAccessibility('daltonismo')">Modo Daltônico</a>
+            <a href="#" onclick="toggleAccessibility('preto-e-branco')">Preto e Branco</a>
+            <a href="#" onclick="toggleAccessibility('nenhum')">Restaurar Padrão</a>
+        </div>
+    </div>
+
+    <!-- Legendas de Acessibilidade -->
+    <button class="legend-toggle" onclick="toggleLegend()">Ver Legenda (Daltonismo)</button>
+    <div class="daltonismo-legend" id="daltonismoLegend">
+        <div class="legend-item">
+            <div class="legend-symbol" style="background: #0066cc;">★</div>
+            <span class="legend-text">Excelente</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-symbol" style="background: #666666;">●</div>
+            <span class="legend-text">Bom</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-symbol" style="background: #cc6600;">▲</div>
+            <span class="legend-text">Atenção</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-symbol" style="background: #000000;">✖</div>
+            <span class="legend-text">Ruim</span>
+        </div>
+    </div>
+
+    <button class="pb-legend-toggle" onclick="togglePbLegend()">Ver Legenda (P&B)</button>
+    <div class="pb-legend" id="pbLegend">
+        <div class="legend-item">
+            <div class="legend-symbol">■</div>
+            <span class="legend-text">Excelente</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-symbol">●</div>
+            <span class="legend-text">Bom</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-symbol">▲</div>
+            <span class="legend-text">Atenção</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-symbol">✖</div>
+            <span class="legend-text">Ruim</span>
+        </div>
+    </div>
+
+    <!-- Elementos Decorativos -->
+    <div class="bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- PÁGINA DE RECUPERAR SENHA -->
+        <div class="page active" id="recuperarSenhaPage">
+            <div class="login-page">
+                <div class="recovery-card">
+                    <!-- Logo ProJK -->
+                    <div class="projk-logo-container">
+                        <div class="projk-logo">
+                            <span class="logo-pro">Pro</span>
+                            <span class="logo-j">J</span>
+                            <span class="logo-k">K</span>
+                            <span class="logo-dot">●</span>
+                        </div>
+                        <p class="logo-subtitle">Sistema Escolar</p>
+                    </div>
+                    <h1 class="title">Recuperar Senha</h1>
+                    <div class="form-group">
+                        <label class="form-label">Digite seu e-mail de recuperação</label>
+                        <div class="email-container">
+                            <span class="email-icon"><i class="fas fa-envelope"></i></span>
+                            <input type="email" class="form-input email-input" id="recoveryEmail"
+                                placeholder="nome@gmail.com">
+                        </div>
+                    </div>
+                    <button class="submit-button" onclick="recoverPassword()">Redefinir Senha</button>
+                    <div class="feedback-message" id="recoveryMessage"></div>
+                    <p style="margin-top: 20px;">
+                        <a href="#" onclick="navigateToPage('login.html')" style="color: #3498DB;">← Voltar ao Login</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Função de navegação para páginas separadas
+        function navigateToPage(page) {
+            window.location.href = page;
+        }
+    </script>
+</body>
+</html>

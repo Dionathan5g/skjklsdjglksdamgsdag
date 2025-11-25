@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro Aluno - Sistema Escolar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Elementos Decorativos removidos -->
+
+    <div class="app-container">
+        <!-- CADASTRO ALUNO -->
+        <div class="page active" id="cadastroAlunoPage">
+            <div class="login-page">
+                <div class="login-container">
+                    <div class="header">
+                        <!-- Logo ProJK -->
+                        <div class="projk-logo-container">
+                            <div class="projk-logo">
+                                <span class="logo-pro">Pro</span>
+                                <span class="logo-j">J</span>
+                                <span class="logo-k">K</span>
+                                <span class="logo-dot">●</span>
+                            </div>
+                            <p class="logo-subtitle">Sistema Escolar</p>
+                        </div>
+                        
+                        <!-- Seletor de Tipo de Usuário -->
+                        <div class="user-type-selector">
+                            <h3>Quem é você?</h3>
+                            <div class="type-buttons">
+                                <button class="type-btn active" onclick="navigateToPage('cadastro-aluno.html')">
+                                    <span class="type-icon"><i class="fas fa-graduation-cap"></i></span>
+                                    <span class="type-label">Aluno</span>
+                                </button>
+                                <button class="type-btn" onclick="navigateToPage('cadastro-professor.html')">
+                                    <span class="type-icon"><i class="fas fa-chalkboard-teacher"></i></span>
+                                    <span class="type-label">Professor</span>
+                                </button>
+                                <button class="type-btn" onclick="navigateToPage('cadastro-responsavel.html')">
+                                    <span class="type-icon"><i class="fas fa-users"></i></span>
+                                    <span class="type-label">Responsável</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <h1 class="title"><i class="fas fa-graduation-cap"></i> Cadastro - Aluno</h1>
+                        <p style="color: #7f8c8d; font-size: 14px; margin-top: 10px;">Junte-se à nossa comunidade estudantil</p>
+                    </div>
+
+                    <div class="form-container">
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-id-card"></i> Matrícula</label>
+                            <input type="text" class="form-input" id="alunoMatricula" placeholder="Digite sua matrícula">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-user"></i> Nome Completo</label>
+                            <input type="text" class="form-input" id="alunoNome" placeholder="Digite seu nome completo">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-envelope"></i> E-mail</label>
+                            <div class="email-container">
+                                <span class="email-icon"><i class="fas fa-envelope"></i></span>
+                                <input type="email" class="form-input email-input" id="alunoEmail"
+                                    placeholder="seu.email@gmail.com">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-id-card"></i> CPF</label>
+                            <input type="text" class="form-input" id="alunoCpf" placeholder="000.000.000-00"
+                                maxlength="14">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-birthday-cake"></i> Data de Nascimento</label>
+                            <input type="date" class="form-input" id="alunoNascimento">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-book"></i> Série</label>
+                            <select class="form-input" id="alunoSerie">
+                                <option value="">Selecione a série</option>
+                                <option value="1">1ª Série</option>
+                                <option value="2">2ª Série</option>
+                                <option value="3">3ª Série</option>
+                                <option value="4">4ª Série</option>
+                                <option value="5">5ª Série</option>
+                                <option value="6">6ª Série</option>
+                                <option value="7">7ª Série</option>
+                                <option value="8">8ª Série</option>
+                                <option value="9">9ª Série</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-school"></i> Turma</label>
+                            <select class="form-input" id="alunoTurma">
+                                <option value="">Selecione a turma</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-lock"></i> Senha</label>
+                            <div class="password-container">
+                                <span class="password-icon"><i class="fas fa-key"></i></span>
+                                <input type="password" class="form-input password-input" id="alunoSenha"
+                                    placeholder="Mínimo 8 caracteres">
+                            </div>
+                        </div>
+
+                        <button class="submit-button" onclick="cadastrarAluno()">Cadastrar-se Agora</button>
+
+                        <p style="text-align: center; margin-top: 20px;">
+                            <a href="#" onclick="navigateToPage('login.html')" style="color: #3498DB;">← Voltar ao Login</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Função de navegação para páginas separadas
+        function navigateToPage(page) {
+            window.location.href = page;
+        }
+
+        // Máscara de CPF
+        document.getElementById('alunoCpf').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length <= 11) {
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                e.target.value = value;
+            }
+        });
+
+        // Função para validar CPF
+        function validarCPF(cpf) {
+            cpf = cpf.replace(/\D/g, '');
+            if (cpf.length !== 11) return false;
+            if (/^(\d)\1+$/.test(cpf)) return false;
+            
+            let soma = 0;
+            for (let i = 0; i < 9; i++) {
+                soma += parseInt(cpf.charAt(i)) * (10 - i);
+            }
+            let resto = 11 - (soma % 11);
+            if (resto === 10 || resto === 11) resto = 0;
+            if (resto !== parseInt(cpf.charAt(9))) return false;
+            
+            soma = 0;
+            for (let i = 0; i < 10; i++) {
+                soma += parseInt(cpf.charAt(i)) * (11 - i);
+            }
+            resto = 11 - (soma % 11);
+            if (resto === 10 || resto === 11) resto = 0;
+            if (resto !== parseInt(cpf.charAt(10))) return false;
+            
+            return true;
+        }
+
+        // Modificar função cadastrarAluno para redirecionar
+        function cadastrarAluno() {
+            const matricula = document.getElementById('alunoMatricula').value;
+            const nome = document.getElementById('alunoNome').value;
+            const email = document.getElementById('alunoEmail').value;
+            const cpf = document.getElementById('alunoCpf').value;
+            const nascimento = document.getElementById('alunoNascimento').value;
+            const serie = document.getElementById('alunoSerie').value;
+            const turma = document.getElementById('alunoTurma').value;
+            const senha = document.getElementById('alunoSenha').value;
+
+            if (!matricula || !nome || !email || !cpf || !nascimento || !serie || !turma || !senha) {
+                showAlert('Por favor, preencha todos os campos!', 'error');
+                return;
+            }
+
+            if (senha.length < 8) {
+                showAlert('A senha deve ter pelo menos 8 caracteres!', 'error');
+                return;
+            }
+
+            // Validar CPF
+            if (!validarCPF(cpf)) {
+                showAlert('CPF inválido! Por favor, verifique o número digitado.', 'error');
+                return;
+            }
+
+            // Validar unicidade da matrícula
+            const matriculaExistente = Object.values(users).find(u => u.type === 'aluno' && u.matricula === matricula);
+            if (matriculaExistente) {
+                showAlert('Esta matrícula já está cadastrada!', 'error');
+                return;
+            }
+
+            // Validar unicidade do CPF
+            const cpfLimpo = cpf.replace(/\D/g, '');
+            const cpfExistente = Object.values(users).find(u => u.type === 'aluno' && u.cpfAluno && u.cpfAluno.replace(/\D/g, '') === cpfLimpo);
+            if (cpfExistente) {
+                showAlert('Este CPF já está cadastrado!', 'error');
+                return;
+            }
+
+            if (users[email]) {
+                showAlert('Este e-mail já está cadastrado!', 'error');
+                return;
+            }
+
+            const newUser = {
+                password: senha,
+                type: 'aluno',
+                name: nome,
+                matricula: matricula,
+                cpfAluno: cpf,
+                dataNascimento: nascimento,
+                serie: serie,
+                turma: turma
+            };
+            
+            users[email] = newUser;
+            
+            // Salvar dados do usuário no localStorage para login automático
+            localStorage.setItem('currentUser', JSON.stringify(newUser));
+
+            showAlert('Cadastro realizado com sucesso! Redirecionando...', 'success');
+            setTimeout(() => navigateToPage('dashboard-aluno.html'), 2000);
+        }
+    </script>
+</body>
+</html>
+
